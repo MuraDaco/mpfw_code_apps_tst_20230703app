@@ -1,0 +1,23 @@
+. Step to follow when a new tst app revision is created
+    , clean the build/cmake dir but "readme.txt" file
+    . files interested
+        . src/lib/cg/cg_krThread.h
+            . add the two following #define statement 
+            #elif defined(TST_<date/code revision>)
+            // ------------------------------------------------------
+            #include "../../tst/<date/code revision>/cg/cg_krThread.h"
+            #define TST_<date/code revision>_CG_KR_THREAD
+            // --  --  --  --  --  --  --  --  --  --  --  --  --  --  
+            #else
+        . src/tst/<date/code revision>/main.h
+            . update all statements that contain the TST_<date/code revision> string
+              replacing the new value of <date/code revision>
+        . CMakeLists.txt
+            . sections interested
+                . target_compile_options(${EXECUTABLE} PRIVATE
+                    . update the version number
+                        .     -DTST_<date/code revision>
+
+. Step to follow to switch the TST_<date/code revision> application
+    . Only CMakeLists.txt must be updated (see the previous note)
+    , the other files already exist (main.h) or are already updated (cg_krThread.h)
